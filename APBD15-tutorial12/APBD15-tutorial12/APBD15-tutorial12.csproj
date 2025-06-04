@@ -21,8 +21,4 @@
         </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="DAL\DTO\Requests\" />
-    </ItemGroup>
-
 </Project>

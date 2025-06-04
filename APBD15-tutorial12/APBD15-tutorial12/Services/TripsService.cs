@@ -1,4 +1,5 @@
 ﻿using APBD15_tutorial12.DAL;
+using APBD15_tutorial12.DAL.DTO.Requests;
 using APBD15_tutorial12.DAL.DTO.Responses;
 using APBD15_tutorial12.DAL.Repositories;
 
@@ -30,6 +31,28 @@ public class TripsService : ITripsService
         {
             _unitOfWork.RollBack();
             return (null, 0);
+        }
+    }
+
+    public async Task<string> AddClientToClientTripAsync(int tripId, ClientDTORequest requestClient, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _unitOfWork.BeginTransaction();
+            
+            var resultOfAssigningToTripAsync = await _tripsRepository.AssignClientToTripAsync(tripId, requestClient, cancellationToken);
+
+            if (resultOfAssigningToTripAsync.Equals("success"))
+                _unitOfWork.Commit();
+            else
+                _unitOfWork.RollBack();
+            
+            return resultOfAssigningToTripAsync; 
+        }
+        catch (Exception e)
+        {
+            _unitOfWork.RollBack();
+            return "error";
         }
     }
 }

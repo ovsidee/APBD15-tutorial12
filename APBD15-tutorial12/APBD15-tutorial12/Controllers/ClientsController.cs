@@ -22,7 +22,7 @@ public class ClientsController : ControllerBase
         return resultOfDelete switch
         {
             "success" => Ok("Client deleted"),
-            "notFound" => BadRequest("Client not found"),
+            "notFound" => NotFound("Client not found"),
             "hasTrips" => Conflict("Client has trips"),
             "error" => StatusCode(500, "Error"),
             _ => StatusCode(500, "Error")
